@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MINI CURSO - Sólidos de Revolución</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #1b1b1b;
+      color: #00d1b2;
+    }
+
+    header {
+      background: linear-gradient(135deg, #111, #333);
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    header h2 {
+      color: #aaa;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    nav {
+      background: #222;
+      padding: 15px 0;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      color: #f0f0f0;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #00d1b2;
+    }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+      animation: fadeIn 1.5s ease;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #00d1b2;
+    }
+
+    p {
+      line-height: 1.7;
+      color: #918b8b;
+      font-size: 1.1rem;
+    }
+
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  border-radius: 10px;
+  animation: zoom 0.5s ease;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+@keyframes zoom {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+    .examples img {
+      width: 90%;
+      max-width: 500px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+      transition: transform 0.4s ease;
+    }
+
+    .examples img:hover {
+      transform: scale(1.05);
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 600px;
+      height: 350px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 20px;
+      box-shadow: 0 4px 15px rgba(255,255,255,0.1);
+    }
+
+    footer {
+      background: #111;
+      color: #aaa;
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* símbolos decorativos */
+    .symbol {
+      position: absolute;
+      font-size: 3rem;
+      color: #fbfafa(249, 247, 247, 0.05);
+      animation: float 6s ease-in-out infinite;
+      user-select: none;
+    }
+
+    .symbol:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+    .symbol:nth-child(2) { top: 50%; right: 25%; animation-delay: 1s; }
+    .symbol:nth-child(3) { bottom: 20%; left: 30%; animation-delay: 2s; }
+    .symbol:nth-child(4) { bottom: 30%; right: 15%; animation-delay: 3s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="symbol">∫</div>
+    <div class="symbol">π</div>
+    <div class="symbol">dx</div>
+    <div class="symbol">Σ</div>
+    <h1>MINI CURSO</h1>
+    <h2>Sólidos en Revolución</h2>
+  </header>
+
+  <nav>
+    <a href="#introduccion">Inicio</a>
+    <a href="#conceptos">Conceptos</a>
+    <a href="#ejemplos">Ejemplos</a>
+    <a href="#video">Video</a>
+    <a href="#creador">Creador</a>
+  </nav>
+
+  <section id="introduccion">
+  <h2>Descripción del Proyecto</h2>
+  <p>
+    Este mini curso tiene como objetivo comprender el concepto de los <strong>sólidos de revolución</strong>, 
+    su relación con las <strong>integrales definidas</strong> y cómo se utilizan para calcular 
+    <strong>volúmenes tridimensionales</strong> generados por la rotación de una región en el plano. 
+  </p>
+  <p>
+    El propósito es que el estudiante desarrolle una comprensión visual y analítica de cómo una figura plana 
+    puede generar un cuerpo tridimensional al girar alrededor de un eje, y cómo el cálculo integral permite 
+    determinar su volumen con precisión. 
+  </p>
+  <p>
+    Este tema forma parte esencial del estudio de <strong>Cálculo II</strong> y tiene aplicaciones prácticas 
+    en ingeniería, diseño, arquitectura y física, donde frecuentemente se requiere calcular volúmenes o áreas 
+    de figuras con simetría rotacional.
+  </p>
+</section>
+
+<section id="conceptos">
+  <h2>Conceptos Clave</h2>
+
+  <h3>¿Qué es un sólido de revolución?</h3>
+  <p>
+    Un sólido de revolución es una figura tridimensional obtenida al rotar una región del plano alrededor 
+    de un eje fijo, como el eje <em>x</em> o el eje <em>y</em>. 
+    Por ejemplo, si una parábola gira alrededor del eje <em>x</em>, se genera un cuerpo con forma de cuenco o paraboloide.
+  </p>
+
+  <h3>Relación con las integrales</h3>
+  <p>
+    El cálculo integral permite determinar el volumen de estos sólidos sumando los volúmenes de infinitas secciones 
+    circulares o cilíndricas muy delgadas. Dependiendo del tipo de rotación y la forma de la región, se utilizan distintos métodos.
+  </p>
+
+  <h3>Método de los discos</h3>
+  <p>
+    Se utiliza cuando la región gira alrededor de un eje y no queda espacio vacío en el centro.  
+    Cada disco tiene un radio igual al valor de la función y un grosor infinitesimal <em>dx</em>.  
+    La fórmula general es:
+  </p>
+  <p>
+    $$ V = \pi \int_a^b [f(x)]^2 \, dx $$
+  </p>
+
+  <h3>Método de las arandelas</h3>
+  <p>
+    Este método se aplica cuando el sólido tiene un hueco interno (por ejemplo, si la región gira alrededor de una línea diferente al eje principal).  
+    Se resta el volumen interno del externo:
+  </p>
+  <p>
+    $$V = \pi \int_a^b ([R(x)]^2 - [r(x)]^2) \, dx$$
+  </p>
+
+  <h3>Método de los cascarones cilíndricos</h3>
+  <p>
+    Se usa cuando la región gira de manera que resulta más fácil considerar "capas" o "cascarones" delgados en lugar de discos.  
+    Este método es útil cuando se rota alrededor del eje <em>y</em> o de una línea vertical.
+  </p>
+  <p>
+    $$ V = 2\pi \int_a^b x \, f(x) \, dx $$
+  </p>
+
+  <h3>Aplicaciones</h3>
+  <p>
+    Los sólidos de revolución se aplican para modelar objetos como tanques, ejes, piezas mecánicas, jarras o copas.  
+    Además, ayudan a comprender cómo las herramientas del cálculo se utilizan para describir y analizar formas reales 
+    mediante el lenguaje matemático.
+  </p>
+</section>
+
+  <section id="ejemplos" class="examples">
+  <h2>Ejemplos</h2>
+
+  <div class="example">
+    <h3>Ejemplo 1: Volumen de un sólido de revolución (Método de los discos)</h3>
+    
+    <a href="img/solido-revolucion.png" target="_blank">
+      <img src="img/solido-revolucion.png" alt="Ejemplo de sólido de revolución" class="zoomable" />
+    </a>
+  </div>
+
+  <div class="example">
+    <h3>Ejemplo 2: Otro método visual de revolución</h3>
+    <p>Visualiza la función $$ y = f(x) $$ girando alrededor del eje X. Observa cómo se forma el sólido.</p>
+    <a href="img/solido-revolucion2.png" target="_blank">
+      <img src="img/solido-revolucion2.png" alt="Ejemplo método de revolución" class="zoomable" />
+    </a>
+  </div>
+</section>
+<!-- ===== SECCIÓN DE VIDEO ===== -->
+<section id="video" style="text-align: center; padding: 60px 20px;">
+  <h2 style="color: #00ffff;">Video Explicativo</h2>
+  <video width="640" height="360" controls style="border-radius: 10px; box-shadow: 0 0 20px rgba(0,255,255,0.4);">
+    <source src="videos/mi-video.mp4" type="video/mp4">
+    Tu navegador no soporta el video.
+  </video>
+  <p style="color: #ccc; margin-top: 15px;">
+    En este video se explica paso a paso cómo se aplican los métodos de los discos y cascarones
+    para obtener el volumen de sólidos de revolución.
+  </p>
+</section>
+
+<!-- ===== SECCIÓN DE CREADOR ===== -->
+<section id="creador" style="text-align: center; padding: 60px 20px;">
+  <h2 style="color: #00ffff;">Creador</h2>
+  <p style="color: #ccc;">
+    Universidad Mariano Galvez<br>
+    Facultad de Ingeniería en Sistemas<br>
+    Proyecto académico desarrollado para la asignatura de Cálculo II.<br>
+    Tema: Sólidos en Revolución.<br>
+    Autor: Kevin Estuardo Rivera Ramos<br>
+    Carné: 9941-23-25388<br>
+    Año: 2025
+  </p>
+</section>
+
+    <p>
+      Elaborado por un estudiante de Ingeniería en Sistemas apasionado por las matemáticas, el diseño web y la enseñanza interactiva.  
+      <br><br>
+      Contacto: <em>kriverar1@miumg.edu.gt</em>
+    </p>
+  </section>
+
+  <footer>
+    © 2025 Mini Curso de Cálculo II| Todos los derechos reservados.
+  </footer>
+<!-- 🌟 Símbolos flotantes decorativos -->
+<div class="symbol">∫</div>
+<div class="symbol">π</div>
+<div class="symbol">Σ</div>
+<div class="symbol">√</div>
+<div class="symbol">∞</div>
+<div class="symbol">θ</div>
+<div class="symbol">Δ</div>
+<div class="symbol">ƒ</div>
+
+<style>
+  /* 🌟 Estilos para los símbolos flotantes */
+  .symbol {
+    position: absolute;
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.1); /* Suave y elegante */
+    animation: float 6s ease-in-out infinite;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* Posiciones predefinidas */
+  .symbol:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+  .symbol:nth-child(2) { top: 50%; right: 25%; animation-delay: 1s; }
+  .symbol:nth-child(3) { bottom: 20%; left: 30%; animation-delay: 2s; }
+  .symbol:nth-child(4) { bottom: 30%; right: 15%; animation-delay: 3s; }
+  .symbol:nth-child(5) { top: 10%; left: 75%; animation-delay: 1.5s; }
+  .symbol:nth-child(6) { top: 70%; left: 10%; animation-delay: 2.5s; }
+  .symbol:nth-child(7) { bottom: 15%; right: 40%; animation-delay: 3.5s; }
+  .symbol:nth-child(8) { top: 80%; right: 20%; animation-delay: 4s; }
+
+  /* Animación flotante */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+</style>
+
+<!-- ⚙️ Script opcional: genera símbolos aleatorios (puedes dejarlo o quitarlo) -->
+<script>
+  // Si deseas que aparezcan símbolos adicionales aleatorios:
+  const extraSymbols = ['∫', 'π', 'Σ', '√', '∞', 'θ', 'Δ', 'ƒ', 'α', 'β'];
+  const container = document.body;
+
+  for (let i = 0; i < 6; i++) { // cambia 6 por el número que desees
+    const span = document.createElement('span');
+    span.classList.add('symbol');
+    span.textContent = extraSymbols[Math.floor(Math.random() * extraSymbols.length)];
+    span.style.top = Math.random() * 90 + '%';
+    span.style.left = Math.random() * 90 + '%';
+    span.style.animationDelay = Math.random() * 5 + 's';
+    container.appendChild(span);
+  }
+</script>
+
+</body>
+
+</html>
